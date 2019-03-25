@@ -1,8 +1,10 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Description
 
-In the project directory, you can run:
+With this feature, users can add a "journal entry" for offline interations by connecting with the artists/producers in your location that you are working with. This feature can be used to discover who is who when attending career related events. The goal of this is to keep people engaged with eachother, grow their network and increase their credibility score.
+
+---
 
 ### `npm start`
 
