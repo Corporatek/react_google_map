@@ -12,6 +12,7 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
+      isLoading: false,
       isLocated: false,
       center: {
         lat: 39.8283,
@@ -23,11 +24,14 @@ class App extends Component {
   }
  
 handleClick(){
+  // this.setState(prevState => {prevState.isLoading = true})
+
   navigator.geolocation.getCurrentPosition((position) => {
     console.log(position.coords.latitude, position.coords.longitude)
     var x = position.coords.latitude
     var y = position.coords.longitude
     this.setState({
+      isLoading: false,
       isLocated: true,
       center: {
         lat: x,
@@ -37,12 +41,14 @@ handleClick(){
     })
 
       });
-}
 
+}
   render() {
 
+    console.log(this.state)
 
-    const nearBy = []
+
+ const nearBy = []
 
  if (this.state.isLocated === true) {
    userLocation.map(user => {
@@ -69,6 +75,7 @@ return nearBy
   console.log(nearBy)
   const nearByUsers = nearBy.map(user => <FoundUsers key={user.id} name={user.name} />)
 
+
     return (
       <div className="App">
         <header>
@@ -77,7 +84,8 @@ return nearBy
 
         <button onClick={this.handleClick}>Get My Location</button>
 {nearByUsers}
-        <div style={{ height: '100vh', width: '50%' }}>
+        {/* <div style={{ height: '100vh', width: '50%' }}>
+
         <GoogleMapReact
           bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API}}
           center={this.state.center}
@@ -90,15 +98,11 @@ return nearBy
             lng={this.state.center.lng}
             text={'My Location'}
           />
-          {/* <AnyReactComponent
-          lat={userLocation[0].center.lat}
-          lng={userLocation[0].center.lng}
-          text={userLocation[0].name}
-          /> */}
+      
         </GoogleMapReact>
 
      
-        </div>
+        </div> */}
       </div>
     );
   }
