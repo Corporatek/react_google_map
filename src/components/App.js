@@ -5,6 +5,7 @@ import '../App.css';
 import GoogleMapReact from 'google-map-react';
 import userLocation from "./UserLocationData";
 import FoundUsers from './FindNearbyUsers';
+import pulse from "../pulse.gif";
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
@@ -24,7 +25,7 @@ class App extends Component {
   }
  
 handleClick(){
-  // this.setState(prevState => {prevState.isLoading = true})
+  this.setState({isLoading: true})
 
   navigator.geolocation.getCurrentPosition((position) => {
     console.log(position.coords.latitude, position.coords.longitude)
@@ -74,15 +75,20 @@ return nearBy
   }
   console.log(nearBy)
   const nearByUsers = nearBy.map(user => <FoundUsers key={user.id} name={user.name} />)
-
+  const loading = this.state.isLoading ? <img src={pulse} alt="Wheel spinning"/> : ""
 
     return (
       <div className="App">
-        <header>
+        <h1>
           Collab
-        </header>
+        </h1>
 
-        <button onClick={this.handleClick}>Get My Location</button>
+        <button onClick={this.handleClick}>Get My Location</button> 
+        <br></br>
+        <br></br>
+        <br></br>
+{loading} <br></br>
+
 {nearByUsers}
         {/* <div style={{ height: '100vh', width: '50%' }}>
 
