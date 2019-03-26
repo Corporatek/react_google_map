@@ -4,7 +4,7 @@ import '../App.css';
 // import SimpleMap from './SimpleMap';
 import GoogleMapReact from 'google-map-react';
 import userLocation from "./UserLocationData";
-import FoundUser from './FindNearbyUsers';
+import FoundUsers from './FindNearbyUsers';
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
@@ -40,7 +40,11 @@ handleClick(){
 }
 
   render() {
-  if (this.state.isLocated === true) {
+
+
+    const nearBy = []
+
+ if (this.state.isLocated === true) {
    userLocation.map(user => {
         const myCenter = this.state.center
 
@@ -49,19 +53,21 @@ handleClick(){
           r *= r;
           if (dist_points < r) {
               console.log(user.name + " is nearby!")
-              return true
+              nearBy.push(user)            
+              return user
           }
           return false;
       }
 
 check_a_point(myCenter.lat, myCenter.lng, user.center.lat, user.center.lng, 0.001)
+// console.log(nearBy)
 
-return user
+return nearBy
       } 
     ) 
   }
-  // console.log(this.state)
-
+  console.log(nearBy)
+  const nearByUsers = nearBy.map(user => <FoundUsers key={user.id} name={user.name} />)
 
     return (
       <div className="App">
@@ -70,8 +76,7 @@ return user
         </header>
 
         <button onClick={this.handleClick}>Get My Location</button>
-        <FoundUser />
-
+{nearByUsers}
         <div style={{ height: '100vh', width: '50%' }}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API}}
@@ -79,16 +84,17 @@ return user
           zoom={this.state.zoom}
           id="map"
         >
+        
           <AnyReactComponent
             lat={this.state.center.lat}
             lng={this.state.center.lng}
             text={'My Location'}
           />
-          <AnyReactComponent
+          {/* <AnyReactComponent
           lat={userLocation[0].center.lat}
           lng={userLocation[0].center.lng}
           text={userLocation[0].name}
-          />
+          /> */}
         </GoogleMapReact>
 
      
